@@ -1,8 +1,8 @@
 import sqlBuilder.Customer;
-import sqlBuilder.actionBuilder.DeleteBuilder;
-import sqlBuilder.actionBuilder.InsertBuilder;
-import sqlBuilder.actionBuilder.SelectBuilder;
-import sqlBuilder.actionBuilder.UpdateBuilder;
+import sqlBuilder.builder.DmlBuilder.DeleteBuilder;
+import sqlBuilder.builder.DmlBuilder.InsertBuilder;
+import sqlBuilder.builder.DmlBuilder.SelectBuilder;
+import sqlBuilder.builder.DmlBuilder.UpdateBuilder;
 import sqlBuilder.dto.GetCustomerNameDto;
 import sqlBuilder.type.OrderType;
 import sqlBuilder.type.TableType;

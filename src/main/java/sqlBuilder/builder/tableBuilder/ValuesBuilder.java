@@ -1,4 +1,4 @@
-package sqlBuilder.tableBuilder;
+package sqlBuilder.builder.tableBuilder;
 
 public class ValuesBuilder {
     private StringBuilder valuesBuilder;

@@ -1,4 +1,4 @@
-package sqlBuilder.tableBuilder;
+package sqlBuilder.builder.tableBuilder;
 
 import sqlBuilder.constant.Symbol;
 

@@ -1,4 +1,4 @@
-package sqlBuilder.conditionBuilder;
+package sqlBuilder.builder.conditionBuilder;
 
 import sqlBuilder.constant.Symbol;
 import sqlBuilder.type.OrderType;

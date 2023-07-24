@@ -1,7 +1,7 @@
-package sqlBuilder.actionBuilder;
+package sqlBuilder.builder.DmlBuilder;
 
 
-import sqlBuilder.tableBuilder.FromBuilder;
+import sqlBuilder.builder.tableBuilder.FromBuilder;
 import sqlBuilder.type.TableType;
 
 public class DeleteBuilder {

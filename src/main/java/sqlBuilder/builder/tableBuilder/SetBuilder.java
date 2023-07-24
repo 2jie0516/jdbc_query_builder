@@ -1,6 +1,6 @@
-package sqlBuilder.tableBuilder;
+package sqlBuilder.builder.tableBuilder;
 
-import sqlBuilder.conditionBuilder.WhereBuilder;
+import sqlBuilder.builder.conditionBuilder.WhereBuilder;
 
 import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_AND;
 

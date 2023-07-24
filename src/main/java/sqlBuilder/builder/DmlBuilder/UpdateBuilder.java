@@ -1,7 +1,7 @@
-package sqlBuilder.actionBuilder;
+package sqlBuilder.builder.DmlBuilder;
 
 import sqlBuilder.constant.Symbol;
-import sqlBuilder.tableBuilder.SetBuilder;
+import sqlBuilder.builder.tableBuilder.SetBuilder;
 import sqlBuilder.type.TableType;
 
 import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_COMMA;

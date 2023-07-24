@@ -1,7 +1,7 @@
-package sqlBuilder.tableBuilder;
+package sqlBuilder.builder.tableBuilder;
 
-import sqlBuilder.conditionBuilder.OrderBuilder;
-import sqlBuilder.conditionBuilder.WhereBuilder;
+import sqlBuilder.builder.conditionBuilder.OrderBuilder;
+import sqlBuilder.builder.conditionBuilder.WhereBuilder;
 import sqlBuilder.constant.Symbol;
 import sqlBuilder.type.OrderType;
 
