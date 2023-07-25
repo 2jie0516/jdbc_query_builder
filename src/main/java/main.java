@@ -15,8 +15,18 @@ import sqlBuilder.type.TableType;
 public class main {
     public static void main(String[] args) {
 
-        WhereBuilder where = new WhereBuilder().where("email").equal(":email").and("name").equal(":name");
-        OrderBuilder order1 = new OrderBuilder().orderBy("name").orderType(OrderType.ASC).addOrder("email").orderType(OrderType.DESC);
+        WhereBuilder where = new WhereBuilder()
+                .where("email")
+                .equal(":email")
+                .and("name")
+                .equal(":name");
+
+        OrderBuilder order1 = new OrderBuilder()
+                .orderBy("name")
+                .orderType(OrderType.ASC)
+                .addOrder("email")
+                .orderType(OrderType.DESC);
+
         ColumnBuilder column = new ColumnBuilder().columns("email", "name");
         ValuesBuilder values = new ValuesBuilder().values(":email", ":name");
         SetBuilder set = new SetBuilder().set("email = :afterUpdateEmail");
