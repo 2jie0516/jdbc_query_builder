@@ -1,22 +1,50 @@
 package sqlBuilder.builder.DmlBuilder;
 
 
-import sqlBuilder.builder.tableBuilder.FromBuilder;
+import sqlBuilder.builder.conditionBuilder.WhereBuilder;
 import sqlBuilder.type.TableType;
 
 public class DeleteBuilder {
-    private StringBuilder deleteSqlBuilder = new StringBuilder();
+    private String from;
+    private String where;
 
-    public DeleteBuilder delete() {
-        deleteSqlBuilder.append("DELETE");
-        return this;
+    public DeleteBuilder(String from, String where) {
+        this.from = from;
+        this.where = where;
     }
 
-    public FromBuilder from(TableType table) {
-        return new FromBuilder(deleteSqlBuilder.append(" FROM ").append(table));
+    public static class Builder<T> {
+        private String from;
+        private String where;
+
+        public Builder<T> deleteFrom(TableType table) {
+            from = table.name();
+            return this;
+        }
+
+        public Builder<T> where(WhereBuilder whereBuilder) {
+            where = whereBuilder.build();
+            return this;
+        }
+
+        public DeleteBuilder build() {
+            boolean whereIsEmpty = where == null;
+
+            if (whereIsEmpty) {
+                where = "";
+            }
+
+            return new DeleteBuilder(from, where);
+        }
     }
 
-    public String build() {
+    public String toString() {
+        StringBuilder deleteSqlBuilder = new StringBuilder();
+        deleteSqlBuilder.append("DELETE FROM ")
+                .append(from)
+                .append(where);
+
         return deleteSqlBuilder.toString();
     }
+
 }

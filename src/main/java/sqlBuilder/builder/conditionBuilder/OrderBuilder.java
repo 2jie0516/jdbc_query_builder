@@ -4,14 +4,20 @@ import sqlBuilder.constant.Symbol;
 import sqlBuilder.type.OrderType;
 
 public class OrderBuilder {
-    private StringBuilder orderBuilder;
+    private StringBuilder orderBuilder = new StringBuilder();
 
-    public OrderBuilder(StringBuilder orderBuilder) {
-        this.orderBuilder = orderBuilder;
+    public OrderBuilder orderBy(String column) {
+        orderBuilder.append(" ORDER BY ").append(column).append(Symbol.SPACE.getSymbol());
+        return this;
     }
 
-    public OrderBuilder orderBy(String column, OrderType orderType) {
-        orderBuilder.append(Symbol.COMMA.getSymbol()).append(column).append(Symbol.SPACE.getSymbol()).append(orderType);
+    public OrderBuilder orderType(OrderType orderType){
+        orderBuilder.append(orderType);
+        return this;
+    }
+
+    public OrderBuilder addOrder(String column) {
+        orderBuilder.append(Symbol.COMMA.getSymbol()).append(column).append(Symbol.SPACE.getSymbol());
         return this;
     }
 

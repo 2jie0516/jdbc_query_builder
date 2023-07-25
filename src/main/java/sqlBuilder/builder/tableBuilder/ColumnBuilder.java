@@ -5,23 +5,19 @@ import sqlBuilder.constant.Symbol;
 import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_COMMA;
 
 public class ColumnBuilder {
-    private StringBuilder columnBuilder;
+    private StringBuilder columnBuilder = new StringBuilder();
 
-    public ColumnBuilder(StringBuilder columnBuilder) {
-        this.columnBuilder = columnBuilder;
-    }
+    public ColumnBuilder columns(String... columns) {
+        columnBuilder.append(Symbol.OPEN_PARENTHESIS.getSymbol());
 
-    public ValuesBuilder values(String... values) {
-        columnBuilder.append(" VALUES" + Symbol.SPACE.getSymbol() + Symbol.OPEN_PARENTHESIS.getSymbol());
-
-        for (String value : values) {
-            columnBuilder.append(value + Symbol.COMMA.getSymbol());
+        for (String column : columns) {
+            columnBuilder.append(column + Symbol.COMMA.getSymbol());
         }
 
         columnBuilder.setLength(columnBuilder.length() - INVALID_LAST_COMMA);
         columnBuilder.append(Symbol.CLOSING_PARENTHESIS.getSymbol());
 
-        return new ValuesBuilder(columnBuilder);
+        return this;
     }
 
     public String build() {

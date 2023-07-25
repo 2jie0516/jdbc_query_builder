@@ -1,32 +1,50 @@
 package sqlBuilder.builder.DmlBuilder;
 
-import sqlBuilder.constant.Symbol;
+import sqlBuilder.builder.conditionBuilder.WhereBuilder;
 import sqlBuilder.builder.tableBuilder.SetBuilder;
 import sqlBuilder.type.TableType;
 
-import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_COMMA;
-
 public class UpdateBuilder {
-    private StringBuilder updateSqlBuilder = new StringBuilder();
+    private String table;
+    private String set;
+    private String where;
 
-    public UpdateBuilder update(TableType table) {
-        updateSqlBuilder.append("UPDATE ").append(table);
-        return this;
+    public UpdateBuilder(String update, String set, String where) {
+        this.table = update;
+        this.set = set;
+        this.where = where;
     }
 
-    public SetBuilder set(String... column) {
-        updateSqlBuilder.append(" SET ");
+    public static class Builder<T> {
+        private String update;
+        private String set;
+        private String where;
 
-        for (String columnValue : column) {
-            updateSqlBuilder.append(columnValue + Symbol.COMMA.getSymbol());
+
+        public Builder<T> update(TableType table) {
+            update = table.name();
+            return this;
         }
 
-        updateSqlBuilder.setLength(updateSqlBuilder.length() - INVALID_LAST_COMMA);
+        public Builder<T> set(SetBuilder setBuilder) {
+            set = setBuilder.build();
+            return this;
+        }
 
-        return new SetBuilder(updateSqlBuilder);
+        public Builder<T> where(WhereBuilder whereBuilder){
+            where = whereBuilder.build();
+            return this;
+        }
+
+        public UpdateBuilder build(){
+            return new UpdateBuilder(update,set,where);
+        }
     }
 
-    public String build() {
+    public String toString() {
+        StringBuilder updateSqlBuilder = new StringBuilder();
+        updateSqlBuilder.append("UPDATE ").append(table).append(set).append(where);
+
         return updateSqlBuilder.toString();
     }
 }

@@ -1,28 +1,26 @@
 package sqlBuilder.builder.conditionBuilder;
 
-import sqlBuilder.constant.Symbol;
-import sqlBuilder.type.OrderType;
-
 public class WhereBuilder {
-    private StringBuilder whereBuilder;
+    private StringBuilder whereBuilder = new StringBuilder();
 
-    public WhereBuilder(StringBuilder whereBuilder) {
-        this.whereBuilder = whereBuilder;
+    public WhereBuilder where(String columnValue) {
+        whereBuilder.append(" WHERE ").append(columnValue);
+        return this;
     }
 
-    public WhereBuilder AND(String condition) {
+    public WhereBuilder equal(String matchValue) {
+        whereBuilder.append(" = ").append(matchValue);
+        return this;
+    }
+
+    public WhereBuilder and(String condition) {
         whereBuilder.append(" AND ").append(condition);
         return this;
     }
 
-    public WhereBuilder OR(String condition) {
+    public WhereBuilder or(String condition) {
         whereBuilder.append(" OR ").append(condition);
         return this;
-    }
-
-    public OrderBuilder orderBy(String column, OrderType orderType) {
-        whereBuilder.append(" ORDER BY ").append(column).append(Symbol.COMMA.getSymbol()).append(orderType);
-        return new OrderBuilder(whereBuilder);
     }
 
     public String build() {

@@ -1,48 +1,99 @@
 package sqlBuilder.builder.DmlBuilder;
 
+import sqlBuilder.builder.conditionBuilder.OrderBuilder;
+import sqlBuilder.builder.conditionBuilder.WhereBuilder;
 import sqlBuilder.constant.Symbol;
-import sqlBuilder.builder.tableBuilder.FromBuilder;
 import sqlBuilder.type.TableType;
 
 import java.lang.reflect.Field;
 
 import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_COMMA;
 
-public class SelectBuilder<T> {
-    private StringBuilder selectSqlBuilder = new StringBuilder();
+public class SelectBuilder {
+    private String select;
+    private String from;
+    private String where;
+    private String order;
 
-    public SelectBuilder<T> select(T column) {
-        selectSqlBuilder.append("SELECT ");
-        appendColumns(column);
-        return this;
+    public SelectBuilder(String select, String from, String where, String order) {
+        this.select = select;
+        this.from = from;
+        this.where = where;
+        this.order = order;
     }
 
-    public SelectBuilder<T> selectAll(T column) {
-        selectSqlBuilder.append("SELECT ");
-        appendColumns(column);
-        return this;
-    }
+    public static class Builder<T>{
+        private String select;
+        private String from;
+        private String where;
+        private String order;
 
-    private void appendColumns(T column) {
-        Class<?> clazz = column.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-
-        for (Field field : fields) {
-            field.setAccessible(true);
-
-            String columnName = field.getName();
-
-            selectSqlBuilder.append(columnName + Symbol.COMMA.getSymbol());
+        public Builder<T> select(T column) {
+            select = appendColumns(column);
+            return this;
         }
 
-        selectSqlBuilder.setLength(selectSqlBuilder.length() - INVALID_LAST_COMMA);
+        public Builder<T> selectAll(T column) {
+            select = appendColumns(column);
+            return this;
+        }
+
+        public Builder<T> from(TableType table) {
+            from = table.name();
+            return this;
+        }
+
+        public Builder<T> where(WhereBuilder whereBuilder) {
+            where = whereBuilder.build();
+            return this;
+        }
+
+        public Builder<T> order(OrderBuilder orderBuilder) {
+            order = orderBuilder.build();
+            return this;
+        }
+
+        private String appendColumns(T column) {
+            StringBuilder selectSqlBuilder = new StringBuilder();
+
+            Class<?> clazz = column.getClass();
+            Field[] fields = clazz.getDeclaredFields();
+
+            for (Field field : fields) {
+                field.setAccessible(true);
+                String columnName = field.getName();
+
+                selectSqlBuilder.append(columnName + Symbol.COMMA.getSymbol());
+            }
+
+            selectSqlBuilder.setLength(selectSqlBuilder.length() - INVALID_LAST_COMMA);
+            return selectSqlBuilder.toString();
+        }
+
+        public SelectBuilder build(){
+            boolean whereIsEmpty = where == null;
+            boolean orderIsEmpty = order == null;
+
+            if(whereIsEmpty){
+                where ="";
+            }
+            if (orderIsEmpty){
+                order ="";
+            }
+
+            return new SelectBuilder(select,from,where,order);
+        }
     }
 
-    public FromBuilder from(TableType table) {
-        return new FromBuilder(selectSqlBuilder.append(" FROM ").append(table));
-    }
+    public String toString() {
+        StringBuilder selectSqlBuilder = new StringBuilder();
+        selectSqlBuilder.append("SELECT ")
+                .append(select)
+                .append(" FROM ")
+                .append(from)
+                .append(where)
+                .append(order);
 
-    public String build() {
         return selectSqlBuilder.toString();
     }
 }

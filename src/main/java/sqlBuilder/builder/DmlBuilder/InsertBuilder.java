@@ -1,34 +1,59 @@
 package sqlBuilder.builder.DmlBuilder;
 
-import sqlBuilder.constant.Symbol;
+import sqlBuilder.builder.tableBuilder.ValuesBuilder;
 import sqlBuilder.builder.tableBuilder.ColumnBuilder;
 import sqlBuilder.type.TableType;
 
-import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_COMMA;
-
-
 public class InsertBuilder {
-    private StringBuilder insertSqlBuilder = new StringBuilder();
+    private String table;
+    private String columns;
+    private String values;
 
-    public InsertBuilder insert(TableType table) {
-        insertSqlBuilder.append("INSERT INTO ").append(table);
-        return this;
+    public InsertBuilder(String table, String columns, String values) {
+        this.table = table;
+        this.columns = columns;
+        this.values = values;
     }
 
-    public ColumnBuilder columns(String... columns) {
-        insertSqlBuilder.append(Symbol.OPEN_PARENTHESIS.getSymbol());
+    public static class Builder<T> {
+        private String insert;
+        private String columns;
+        private String values;
 
-        for (String column : columns) {
-            insertSqlBuilder.append(column + Symbol.COMMA.getSymbol());
+        public Builder<T> insert(TableType table) {
+            insert = table.name();
+            return this;
         }
 
-        insertSqlBuilder.setLength(insertSqlBuilder.length() - INVALID_LAST_COMMA);
-        insertSqlBuilder.append(Symbol.CLOSING_PARENTHESIS.getSymbol());
+        public Builder<T> columns(ColumnBuilder columnBuilder) {
+            columns = columnBuilder.build();
+            return this;
+        }
 
-        return new ColumnBuilder(insertSqlBuilder);
+        public Builder<T> values(ValuesBuilder valuesBuilder) {
+            values = valuesBuilder.build();
+            return this;
+        }
+
+        public InsertBuilder build(){
+            boolean valesIsEmpty = values == null;
+
+            if (valesIsEmpty){
+                values = "";
+            }
+
+            return new InsertBuilder(insert,columns,values);
+        }
     }
 
-    public String build() {
+    public String toString() {
+        StringBuilder insertSqlBuilder = new StringBuilder();
+
+        insertSqlBuilder.append("INSERT INTO ")
+                .append(table)
+                .append(columns)
+                .append(values);
+
         return insertSqlBuilder.toString();
     }
 }

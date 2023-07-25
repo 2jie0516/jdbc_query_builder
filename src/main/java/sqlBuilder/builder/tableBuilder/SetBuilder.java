@@ -1,25 +1,22 @@
 package sqlBuilder.builder.tableBuilder;
 
-import sqlBuilder.builder.conditionBuilder.WhereBuilder;
+import sqlBuilder.constant.Symbol;
 
-import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_AND;
+import static sqlBuilder.constant.LastIndexLength.INVALID_LAST_COMMA;
 
 public class SetBuilder {
-    private StringBuilder setBuilder;
+    private StringBuilder setBuilder = new StringBuilder();
 
-    public SetBuilder(StringBuilder setBuilder) {
-        this.setBuilder = setBuilder;
-    }
+    public SetBuilder set(String... column) {
+        setBuilder.append(" SET ");
 
-    public WhereBuilder where(String... condition) {
-        setBuilder.append(" WHERE ");
-
-        for (String conditionValue : condition) {
-            setBuilder.append(conditionValue + " AND ");
+        for (String columnValue : column) {
+            setBuilder.append(columnValue + Symbol.COMMA.getSymbol());
         }
 
-        setBuilder.setLength(setBuilder.length() - INVALID_LAST_AND);
-        return new WhereBuilder(setBuilder);
+        setBuilder.setLength(setBuilder.length() - INVALID_LAST_COMMA);
+
+        return this;
     }
 
     public String build() {
