@@ -1,4 +1,4 @@
-package sqlBuilder.constant;
+package sqlBuilder;
 
 public class LastIndexLength {
     public static int INVALID_LAST_COMMA = 1;
