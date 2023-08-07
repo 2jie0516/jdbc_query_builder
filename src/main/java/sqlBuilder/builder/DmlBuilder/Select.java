@@ -1,12 +1,11 @@
-package sqlBuilder.builder.DmlBuilder.impl;
+package sqlBuilder.builder.DmlBuilder;
 
-import sqlBuilder.builder.DmlBuilder.Dml;
 import sqlBuilder.builder.conditionBuilder.Order;
 import sqlBuilder.builder.conditionBuilder.Where;
 import sqlBuilder.builder.tableBuilder.Column;
 import sqlBuilder.type.TableType;
 
-public class Select implements Dml {
+public class Select {
     private final Column columns;
     private final TableType table;
     private final Where where;

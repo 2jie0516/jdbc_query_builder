@@ -1,10 +1,9 @@
-package sqlBuilder.builder.DmlBuilder.impl;
+package sqlBuilder.builder.DmlBuilder;
 
-import sqlBuilder.builder.DmlBuilder.Dml;
 import sqlBuilder.builder.conditionBuilder.Where;
 import sqlBuilder.type.TableType;
 
-public class Delete implements Dml {
+public class Delete {
 
     private final TableType table;
     private final Where where;

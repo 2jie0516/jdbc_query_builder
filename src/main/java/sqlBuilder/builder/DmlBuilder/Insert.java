@@ -1,11 +1,10 @@
-package sqlBuilder.builder.DmlBuilder.impl;
+package sqlBuilder.builder.DmlBuilder;
 
-import sqlBuilder.builder.DmlBuilder.Dml;
 import sqlBuilder.builder.tableBuilder.Column;
 import sqlBuilder.builder.tableBuilder.Values;
 import sqlBuilder.type.TableType;
 
-public class Insert implements Dml {
+public class Insert {
     private final TableType table;
     private final Column columns;
     private final Values values;

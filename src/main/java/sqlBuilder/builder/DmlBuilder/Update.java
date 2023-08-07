@@ -1,11 +1,10 @@
-package sqlBuilder.builder.DmlBuilder.impl;
+package sqlBuilder.builder.DmlBuilder;
 
-import sqlBuilder.builder.DmlBuilder.Dml;
 import sqlBuilder.builder.conditionBuilder.Where;
 import sqlBuilder.builder.tableBuilder.Set;
 import sqlBuilder.type.TableType;
 
-public class Update implements Dml {
+public class Update {
 
     private final TableType table;
     private final Set set;
